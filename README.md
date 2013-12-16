@@ -1,4 +1,0 @@
-pure
-====
-
-Pull Requests Dispatcher
