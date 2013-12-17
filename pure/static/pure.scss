@@ -1,0 +1,30 @@
+@import url(http://fonts.googleapis.com/css?family=Electrolize|Share+Tech+Mono);
+
+@mixin initial_html_and_body {
+  margin: 0px;
+  padding: 0px;
+  font-family: "Electrolize";
+}
+
+html {
+  @include initial_html_and_body;
+}
+
+body {
+  @include initial_html_and_body;
+}
+
+/* We want WIDE divs */
+div.container { width: 98%; }
+
+div.navbar-header {
+  background-image: url(saltstack_logo.png);
+  background-repeat: no-repeat;
+  background-position: left center;
+  padding-left: 50px;
+}
+
+#footer {
+  border-top: 1px solid #ddd;
+  text-align: center;
+}
