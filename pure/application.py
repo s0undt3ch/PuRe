@@ -22,6 +22,7 @@ from flask_script import Manager
 from flask_menubuilder import MenuBuilder
 
 # Import PuRe libs
+from pure.permissions import ALL_PERMISSION_IMPORTS
 from pure.signals import application_configured, configuration_loaded
 
 # ----- Simplify * Imports ---------------------------------------------------------------------->
@@ -32,7 +33,7 @@ __all__ = [
     'flash',
     'Blueprint',
     'render_template'
-]
+] + ALL_PERMISSION_IMPORTS
 # <---- Simplify * Imports -----------------------------------------------------------------------
 
 # ----- Setup The Flask Application ------------------------------------------------------------->
