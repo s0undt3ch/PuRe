@@ -56,9 +56,11 @@
       <div class="container">
         {%- include '_flash_messages.html' -%}
 
+        {%- if self.h1_title() %}
         <div class="page-header">
-          <h1>{%- block h1_title %}Welcome!!!{% endblock -%}</h1>
+          <h1>{%- block h1_title %}{% endblock -%}</h1>
         </div>
+        {%- endif %}
 
         <div class="contents">
           {%- block contents %}{% endblock -%}
