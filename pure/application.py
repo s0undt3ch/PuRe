@@ -21,7 +21,7 @@ from urlparse import urlparse, urljoin
 from flask import (Blueprint, Flask, g, render_template, flash, url_for, session, request,
                    redirect, request_started, request_finished)
 from flask_babel import Babel, gettext as _
-from flask_script import Manager
+from flask_script import Command, Option, Manager
 from flask_sqlalchemy import get_debug_queries
 from flask_migrate import Migrate, MigrateCommand
 from flask_menubuilder import MenuBuilder
@@ -88,10 +88,39 @@ def configure_app(config):
 # Database Migrations Support
 migrate = Migrate(app, db)
 
+
 # Scripts Support
+class Administrator(Command):
+    '''
+    Promote account to administrator
+    '''
+
+    def get_options(self):
+        return [
+            Option('username', help='The username to promote')
+        ]
+
+    def run(self, username):
+        try:
+            account = Account.query.get(username)
+            if not account:
+                print('The account {0!r} does not exist'.format(username))
+                exit(1)
+            privilege = Privilege.query.get('administrator')
+            if privilege is None:
+                privilege = Privilege('administrator')
+            account.privileges.add(privilege)
+            db.session.commit()
+            print('The {0!r} user is now an administrator'.format(username))
+            exit(0)
+        except:
+            raise
+
 manager = Manager(configure_app)
 manager.add_command('db', MigrateCommand)
+manager.add_command('administrator', Administrator)
 manager.add_option('-c', '--config', dest='config', required=False)
+
 
 # I18N & L10N Support
 babel = Babel(app)

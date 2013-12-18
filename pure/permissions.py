@@ -19,7 +19,7 @@ import logging
 import github
 # pylint: disable=E0611,F0401
 from flask.ext.principal import (AnonymousIdentity, Identity, Permission, Principal, RoleNeed,
-                                 TypeNeed, identity_changed, identity_loaded)
+                                 TypeNeed, identity_changed, identity_loaded, ActionNeed)
 # pylint: enable=E0611,F0401
 from sqlalchemy.exc import OperationalError
 from pure.signals import after_identity_account_loaded, application_configured

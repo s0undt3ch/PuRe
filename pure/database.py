@@ -26,7 +26,8 @@ from pure.signals import application_configured
 # ----- Simplify * Imports ---------------------------------------------------------------------->
 ALL_DB_IMPORTS = [
     'db',
-    'Account'
+    'Account',
+    'Privilege'
 ]
 __all__ = ALL_DB_IMPORTS + ['ALL_DB_IMPORTS']
 # <---- Simplify * Imports -----------------------------------------------------------------------
