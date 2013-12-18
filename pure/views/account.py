@@ -28,6 +28,12 @@ log = logging.getLogger(__name__)
 
 # ----- Blueprints & Menu Entries --------------------------------------------------------------->
 account = Blueprint('account', __name__, url_prefix='/account')
+
+profile_menu_entry = menus.add_menu_entry(
+    'top_account_nav', _('Profile'), 'account.profile', priority=-1,
+    visiblewhen=check_wether_account_is_not_none
+)
+account_view_nav.add_menu_item(profile_menu_entry)
 # <---- Blueprints & Menu Entries ----------------------------------------------------------------
 
 
@@ -148,4 +154,10 @@ def signout():
     else:
         flash(_('You\'re not authenticated!'))
     return redirect(url_for('main.index'))
+
+
+@account.route('/profile', methods=('GET', 'POST'))
+@authenticated_permission.require(403)
+def profile():
+    return render_template('profile.html')
 # <---- Views ------------------------------------------------------------------------------------

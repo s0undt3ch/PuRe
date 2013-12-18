@@ -51,7 +51,9 @@ __all__ = [
     'redirect_to',
     'redirect_back',
     'Blueprint',
-    'render_template'
+    'render_template',
+    'account_view_nav',
+    'check_wether_account_is_not_none'
 ] + ALL_PERMISSION_IMPORTS + ALL_DB_IMPORTS
 # <---- Simplify * Imports -----------------------------------------------------------------------
 
