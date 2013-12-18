@@ -37,3 +37,6 @@ nosetests.xml
 
 # Ignore compiled css files
 pure/static/pure.css
+
+# Ignore SASS cache files
+.sass-cache
