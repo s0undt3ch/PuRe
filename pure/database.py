@@ -10,7 +10,7 @@
 
     Database Support
 '''
-# pylint: disable=E8221
+# pylint: disable=E8221,C0103
 
 # Import Python libs
 from datetime import datetime
@@ -72,6 +72,11 @@ class Account(db.Model):
 
     query_class     = AccountQuery
 
+    # Relations
+    privileges      = db.relation('Privilege', secondary='account_privileges',
+                                  backref='privileged_accounts', lazy=True, collection_class=set,
+                                  cascade='all, delete')
+
     def __init__(self, id_, login, name, email, token, avatar_url):
         self.id = id_
         self.login = login
@@ -82,4 +87,50 @@ class Account(db.Model):
 
     def update_last_login(self):
         self.last_login = datetime.utcnow()
+
+
+class PrivilegeQuery(orm.Query):
+    def get(self, privilege):
+        if not isinstance(privilege, basestring):
+            try:
+                privilege = privilege.name
+            except AttributeError:
+                # It's a Need
+                try:
+                    privilege = privilege.value
+                except AttributeError:
+                    raise
+        return self.filter(Privilege.name == privilege).first()
+
+
+class Privilege(db.Model):
+    __tablename__   = 'privileges'
+
+    id              = db.Column(db.Integer, primary_key=True)
+    name            = db.Column(db.String(50), nullable=False, unique=True)
+
+    query_class     = PrivilegeQuery
+
+    def __init__(self, privilege_name):
+        if not isinstance(privilege_name, basestring):
+            try:
+                privilege_name = privilege_name.name
+            except AttributeError:
+                # It's a Need
+                try:
+                    privilege_name = privilege_name.need
+                except AttributeError:
+                    raise
+        self.name = privilege_name
+
+    def __repr__(self):
+        return '<{0} {1!r}>'.format(self.__class__.__name__, self.name)
+
+
+# Association table
+account_privileges = db.Table(
+    'account_privileges', db.metadata,
+    db.Column('account_github_id', db.Integer, db.ForeignKey('accounts.github_id'), nullable=False),
+    db.Column('privilege_id', db.Integer, db.ForeignKey('privileges.id'), nullable=False)
+)
 # <---- Define the Models ------------------------------------------------------------------------

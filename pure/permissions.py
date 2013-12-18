@@ -81,8 +81,8 @@ def on_application_configured(app):
                 account.update_last_login()
                 identity.provides.add(TypeNeed('authenticated'))
                 # Update the privileges that a user has
-                #for privilege in account.privileges:
-                #    identity.provides.add(ActionNeed(privilege.name))
+                for privilege in account.privileges:
+                    identity.provides.add(ActionNeed(privilege.name))
                 #for group in account.groups:
                 #    # And for each of the groups the user belongs to
                 #    for privilege in group.privileges:
