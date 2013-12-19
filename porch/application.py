@@ -108,10 +108,10 @@ class Administrator(Command):
             if not account:
                 print('The account {0!r} does not exist'.format(username))
                 exit(1)
-            privilege = Privilege.query.get('administrator')
-            if privilege is None:
-                privilege = Privilege('administrator')
-            account.privileges.add(privilege)
+            group = Group.query.get('Administrator')
+            if group is None:
+                group = Group('Administrator')
+            account.groups.add(group)
             db.session.commit()
             print('The {0!r} user is now an administrator'.format(username))
             exit(0)

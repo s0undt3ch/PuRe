@@ -83,11 +83,11 @@ def on_application_configured(app):
                 # Update the privileges that a user has
                 for privilege in account.privileges:
                     identity.provides.add(ActionNeed(privilege.name))
-                #for group in account.groups:
-                #    # And for each of the groups the user belongs to
-                #    for privilege in group.privileges:
-                #        # Add the group privileges to the user
-                #        identity.provides.add(RoleNeed(privilege.name))
+                for group in account.groups:
+                    # And for each of the groups the user belongs to
+                    for privilege in group.privileges:
+                        # Add the group privileges to the user
+                        identity.provides.add(RoleNeed(privilege.name))
                 # Setup this user's github api access
                 identity.github = github.Github(
                     account.token,

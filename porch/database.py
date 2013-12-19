@@ -27,6 +27,7 @@ from porch.signals import application_configured
 ALL_DB_IMPORTS = [
     'db',
     'Account',
+    'Group',
     'Privilege'
 ]
 __all__ = ALL_DB_IMPORTS + ['ALL_DB_IMPORTS']
@@ -74,6 +75,7 @@ class Account(db.Model):
     query_class     = AccountQuery
 
     # Relations
+    groups          = None  # Defined on Group
     privileges      = db.relation('Privilege', secondary='account_privileges',
                                   backref='privileged_accounts', lazy=True, collection_class=set,
                                   cascade='all, delete')
@@ -88,6 +90,51 @@ class Account(db.Model):
 
     def update_last_login(self):
         self.last_login = datetime.utcnow()
+
+
+class GroupQuery(db.Query):
+
+    def get(self, privilege):
+        if isinstance(privilege, basestring):
+            return self.filter(Group.name == privilege).first()
+        return db.Query.get(self, privilege)
+
+
+class Group(db.Model):
+    __tablename__ = 'groups'
+
+    id            = db.Column(db.Integer, primary_key=True)
+    name          = db.Column(db.String(30))
+
+    accounts      = db.dynamic_loader('Account', secondary='group_accounts',
+                                      backref=db.backref(
+                                          'groups', lazy=True, collection_class=set
+                                      ))
+    privileges    = db.relation('Privilege', secondary='group_privileges',
+                                backref='privileged_groups', lazy=True, collection_class=set,
+                                cascade='all, delete')
+
+    query_class   = GroupQuery
+
+    def __init__(self, name):
+        self.name = name
+
+    def __repr__(self):
+        return u'<{0} {1!r}:{2!r}>'.format(self.__class__.__name__, self.id, self.name)
+
+
+group_accounts = db.Table(
+    'group_accounts', db.metadata,
+    db.Column('group_id', db.Integer, db.ForeignKey('groups.id')),
+    db.Column('account_github_id', db.Integer, db.ForeignKey('accounts.github_id'))
+)
+
+
+group_privileges = db.Table(
+    'group_privileges', db.metadata,
+    db.Column('group_id', db.Integer, db.ForeignKey('groups.id')),
+    db.Column('privilege_id', db.Integer, db.ForeignKey('privileges.id'))
+)
 
 
 class PrivilegeQuery(orm.Query):
