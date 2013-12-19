@@ -29,7 +29,7 @@ from flask_menubuilder import MenuBuilder
 # Import 3rd-party libs
 from jinja2 import Markup
 
-# Import Porch libs
+# Import POrch libs
 from porch.signals import application_configured, configuration_loaded
 # pylint: disable=W0401,W0614
 from porch.database import *

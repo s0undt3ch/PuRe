@@ -11,7 +11,7 @@
     CLI scripts access
 '''
 
-# Import Porch libs
+# Import POrch libs
 from porch.application import manager
 
 

@@ -8,7 +8,7 @@
     porch.signals
     ~~~~~~~~~~~~~
 
-    Porch related signals
+    POrch related signals
 '''
 # pylint: disable=C0103
 

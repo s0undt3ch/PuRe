@@ -5,14 +5,14 @@
     :license: Apache 2.0, see LICENSE for more details.
 
 
-    Porch - Pull-requests Orchestrator
+    POrch - Pull-requests Orchestrator
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     GitHub to Jenkins pull-requests orchestration
 '''
 
 # pylint: disable=E8221
-__package_name__    = 'Porch'
+__package_name__    = 'POrch'
 __summary__         = 'Pull Requests Orchestrator'
 __author__          = 'Pedro Algarvio'
 __email__           = 'pedro@algarvio.me'

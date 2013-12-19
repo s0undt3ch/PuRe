@@ -5,7 +5,7 @@
     setup.py
     ~~~~~~~~
 
-    Porch - Pull-Requests Orchestration Package Setup
+    POrch - Pull-Requests Orchestration Package Setup
 
     :codeauthor: :email:`Pedro Algarvio (pedro@algarvio.me)`
     :copyright: © 2013 by the SaltStack Team, see AUTHORS for more details.

@@ -11,7 +11,7 @@
     The main application view
 '''
 
-# Import Porch libs
+# Import POrch libs
 from porch.application import *
 
 

@@ -19,7 +19,7 @@ from datetime import datetime
 from sqlalchemy import orm
 from flask_sqlalchemy import SQLAlchemy
 
-# Import Porch libs
+# Import POrch libs
 from porch.signals import application_configured
 
 
