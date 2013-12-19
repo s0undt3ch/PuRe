@@ -5,10 +5,10 @@
     :license: Apache 2.0, see LICENSE for more details.
 
 
-    pure.signals
-    ~~~~~~~~~~~~
+    porch.signals
+    ~~~~~~~~~~~~~
 
-    PuRe related signals
+    Porch related signals
 '''
 # pylint: disable=C0103
 

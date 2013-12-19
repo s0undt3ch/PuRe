@@ -5,19 +5,19 @@
     :license: Apache 2.0, see LICENSE for more details.
 
 
-    Pull Requests Dispatcher
-    ~~~~~~~~~~~~~~~~~~~~~~~~
+    Porch - Pull-requests Orchestrator
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    GitHub to Jenkins pull requests builder
+    GitHub to Jenkins pull-requests orchestration
 '''
 
 # pylint: disable=E8221
-__package_name__    = 'PuRe'
-__summary__         = 'Pull Requests Dispatcher'
+__package_name__    = 'Porch'
+__summary__         = 'Pull Requests Orchestrator'
 __author__          = 'Pedro Algarvio'
 __email__           = 'pedro@algarvio.me'
 __license__         = 'Apache 2.0'
-__url__             = 'https://github.com/saltstack/PuRe'
+__url__             = 'https://github.com/saltstack/porch'
 __description__     = __doc__
 __version_info__    = (0, 5, 0)
 __version__         = '.'.join([str(num) for num in __version_info__])

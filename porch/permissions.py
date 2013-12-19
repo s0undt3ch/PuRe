@@ -5,8 +5,8 @@
     :license: Apache 2.0, see LICENSE for more details.
 
 
-    pure.permissions
-    ~~~~~~~~~~~~~~~~
+    porch.permissions
+    ~~~~~~~~~~~~~~~~~
 
     Web-application permissions
 '''
@@ -22,7 +22,7 @@ from flask.ext.principal import (AnonymousIdentity, Identity, Permission, Princi
                                  TypeNeed, identity_changed, identity_loaded, ActionNeed)
 # pylint: enable=E0611,F0401
 from sqlalchemy.exc import OperationalError
-from pure.signals import after_identity_account_loaded, application_configured
+from porch.signals import after_identity_account_loaded, application_configured
 
 log = logging.getLogger(__name__)
 
@@ -61,7 +61,7 @@ principal = Principal(use_sessions=True, skip_static=True)
 
 @application_configured.connect
 def on_application_configured(app):
-    from pure.database import db, Account
+    from porch.database import db, Account
 
     # Finalize principal configuration
     principal.init_app(app)
@@ -103,7 +103,7 @@ def on_application_configured(app):
 @principal.identity_saver
 def save_request_identity(identity):
     # Late import
-    from pure.database import db, Account
+    from porch.database import db, Account
     log.debug('On save_request_identity: {0}'.format(identity))
     if getattr(identity, 'account', None) is None:
         log.debug('No account associated with identity. Nothing to store.')

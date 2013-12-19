@@ -5,14 +5,14 @@
     :license: Apache 2.0, see LICENSE for more details.
 
 
-    pure.scripts
-    ~~~~~~~~~~~~
+    porch.scripts
+    ~~~~~~~~~~~~~
 
     CLI scripts access
 '''
 
-# Import PuRe libs
-from pure.application import manager
+# Import Porch libs
+from porch.application import manager
 
 
 def main():

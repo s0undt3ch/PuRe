@@ -5,8 +5,8 @@
     :license: Apache 2.0, see LICENSE for more details.
 
 
-    pure.application
-    ~~~~~~~~~~~~~~~~
+    porch.application
+    ~~~~~~~~~~~~~~~~~
 '''
 # Let's make PyLint not complain about our module global lowercased variables
 # pylint: disable=C0103
@@ -29,11 +29,11 @@ from flask_menubuilder import MenuBuilder
 # Import 3rd-party libs
 from jinja2 import Markup
 
-# Import PuRe libs
-from pure.signals import application_configured, configuration_loaded
+# Import Porch libs
+from porch.signals import application_configured, configuration_loaded
 # pylint: disable=W0401,W0614
-from pure.database import *
-from pure.permissions import *
+from porch.database import *
+from porch.permissions import *
 # pylint: enable=W0401,W0614
 
 # ----- Simplify * Imports ---------------------------------------------------------------------->
@@ -377,8 +377,8 @@ def inject_in_context():
 
 
 # ----- Setup The Web-Application Views --------------------------------------------------------->
-from pure.views.main import main
-from pure.views.account import account
+from porch.views.main import main
+from porch.views.account import account
 
 app.register_blueprint(main)
 app.register_blueprint(account)

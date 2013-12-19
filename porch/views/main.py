@@ -5,14 +5,14 @@
     :license: Apache 2.0, see LICENSE for more details.
 
 
-    pure.views.index
-    ~~~~~~~~~~~~~~~~
+    porch.views.index
+    ~~~~~~~~~~~~~~~~~
 
     The main application view
 '''
 
-# Import PuRe libs
-from pure.application import *
+# Import Porch libs
+from porch.application import *
 
 
 main = Blueprint('main', __name__)

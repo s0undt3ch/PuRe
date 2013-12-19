@@ -5,8 +5,8 @@
     :license: Apache 2.0, see LICENSE for more details.
 
 
-    pure.database
-    ~~~~~~~~~~~~~
+    porch.database
+    ~~~~~~~~~~~~~~
 
     Database Support
 '''
@@ -19,8 +19,8 @@ from datetime import datetime
 from sqlalchemy import orm
 from flask_sqlalchemy import SQLAlchemy
 
-# Import PuRe libs
-from pure.signals import application_configured
+# Import Porch libs
+from porch.signals import application_configured
 
 
 # ----- Simplify * Imports ---------------------------------------------------------------------->

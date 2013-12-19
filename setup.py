@@ -5,7 +5,7 @@
     setup.py
     ~~~~~~~~
 
-    PuRe - Pull-Requests Dispatcher Package Setup
+    Porch - Pull-Requests Orchestration Package Setup
 
     :codeauthor: :email:`Pedro Algarvio (pedro@algarvio.me)`
     :copyright: © 2013 by the SaltStack Team, see AUTHORS for more details.
@@ -19,7 +19,7 @@ from distutils import log
 from distutils.command import clean, build
 from distutils.extension import Extension
 
-import pure as package
+import porch as package
 
 
 REQUIREMENTS = []
@@ -70,14 +70,14 @@ setup(name=package.__package_name__,
       license=package.__license__,
       platforms='Linux',
       keywords='{0} - {1}'.format(package.__package_name__, package.__description__),
-      packages=['pure'],
+      packages=['porch'],
       package_data={
-          'pure.': [
+          'porch.': [
               '**.css',
               '**.js',
               '**.png',
               '**.cfg',
-              'translations/*/LC_MESSAGES/pure.mo'
+              'translations/*/LC_MESSAGES/porch.mo'
           ]
       },
       install_requires=REQUIREMENTS,
@@ -85,7 +85,7 @@ setup(name=package.__package_name__,
           'build': CustomBuild
       },
       message_extractors={
-          'pure': [
+          'porch': [
               ('**.py', 'python', None),
               ('**.pyx', 'python', None),
               ('templates/**.html', 'jinja2', None),
@@ -94,7 +94,7 @@ setup(name=package.__package_name__,
       },
       entry_points='''
       [console_scripts]
-      pure = pure.scripts:main
+      porch = porch.scripts:main
 
       [distutils.commands]
       compile = babel.messages.frontend:compile_catalog

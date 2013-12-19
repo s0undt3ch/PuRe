@@ -36,7 +36,7 @@ nosetests.xml
 .pydevproject
 
 # Ignore compiled css files
-pure/static/pure.css
+porch/static/porch.css
 
 # Ignore SASS cache files
 .sass-cache

@@ -5,8 +5,8 @@
     :license: Apache 2.0, see LICENSE for more details.
 
 
-    pure.views.account
-    ~~~~~~~~~~~~~~~~~~
+    porch.views.account
+    ~~~~~~~~~~~~~~~~~~~
 
     Account related views
 '''
@@ -21,8 +21,8 @@ from uuid import uuid4
 # Import 3rd-party libs
 import github
 
-# Import PuRe Libs
-from pure.application import *
+# Import Porch Libs
+from porch.application import *
 
 log = logging.getLogger(__name__)
 
