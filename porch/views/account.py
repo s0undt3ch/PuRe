@@ -23,6 +23,7 @@ import github
 
 # Import POrch Libs
 from porch.application import *
+from porch.forms import *
 
 log = logging.getLogger(__name__)
 
@@ -38,7 +39,32 @@ account_view_nav.add_menu_item(profile_menu_entry)
 
 
 # ----- Forms ----------------------------------------------------------------------------------->
+class ProfileForm(DBBoundForm):
 
+    title       = _('My Account')
+
+    login       = TextField(_('Username'), validators=[Required()])
+    timezone    = SelectField(_('Timezone'),
+                              description=_('Select your Time Zone'))
+    locale      = SelectField(_('Locale'),
+                              description=_('This will be the language Salt-CI will use to you.'))
+    hooks_token = HiddenField(_('Hooks Token'))
+
+    # Actions
+    update      = PrimarySubmitField(_('Update Details'))
+
+    def __init__(self, db_entry=None, formdata=None, *args, **kwargs):
+        super(ProfileForm, self).__init__(db_entry, formdata, *args, **kwargs)
+        self.timezone.choices = build_timezones(get_locale())
+        self.locale.choices = [
+            (l.language, l.display_name) for l in babel.list_translations()
+        ]
+
+    def validate_locale(self, field):
+        if field.data is None:
+            # In case there's only one locale, then the field is not
+            # rendered. Re-set the default.
+            field.data = self.db_entry.locale
 # <---- Forms ------------------------------------------------------------------------------------
 
 
@@ -159,5 +185,11 @@ def signout():
 @account.route('/profile', methods=('GET', 'POST'))
 @authenticated_permission.require(403)
 def profile():
-    return render_template('profile.html')
+    form = ProfileForm(db_entry=g.identity.account, formdata=request.values.copy())
+    if form.validate_on_submit():
+        db.update_dbentry_from_form(g.identity.account, form)
+        db.session.commit()
+        flash(_('Account details updated.'), 'success')
+        return redirect_to('account.profile')
+    return render_template('account/profile.html', form=form)
 # <---- Views ------------------------------------------------------------------------------------

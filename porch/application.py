@@ -21,6 +21,7 @@ from urlparse import urlparse, urljoin
 from flask import (Blueprint, Flask, g, render_template, flash, url_for, session, request,
                    redirect, request_started, request_finished)
 from flask_babel import Babel, gettext as _
+from flask_cache import Cache
 from flask_script import Command, Option, Manager
 from flask_sqlalchemy import get_debug_queries
 from flask_migrate import Migrate, MigrateCommand
@@ -42,6 +43,8 @@ __all__ = [
     'g',
     'db',
     'app',
+    'babel',
+    'cache',
     'flash',
     'menus',
     'session',
@@ -50,6 +53,7 @@ __all__ = [
     'redirect',
     'redirect_to',
     'redirect_back',
+    'get_locale',
     'Blueprint',
     'render_template',
     'account_view_nav',
@@ -129,6 +133,9 @@ babel = Babel(app)
 
 # Menus
 menus = MenuBuilder(app)
+
+# Cache Support
+cache = Cache(app)
 
 
 @configuration_loaded.connect

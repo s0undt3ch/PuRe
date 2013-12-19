@@ -17,7 +17,7 @@ from datetime import datetime
 
 # Import 3rd-party plugins
 from sqlalchemy import orm
-from flask_sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy as _SQLAlchemy
 
 # Import POrch libs
 from porch.signals import application_configured
@@ -35,6 +35,20 @@ __all__ = ALL_DB_IMPORTS + ['ALL_DB_IMPORTS']
 
 
 # ----- Instantiate the Plugin ------------------------------------------------------------------>
+class SQLAlchemy(_SQLAlchemy):
+
+    def update_dbentry_from_form(self, dbentry, form):
+        for name in form._fields.keys():
+            column_value = getattr(dbentry, name, None)
+            form_value = form._fields[name].data
+            if isinstance(column_value, orm.collections.InstrumentedSet):
+                form_value = orm.collections.InstrumentedSet(form_value)
+                # if column_value and form_value != column_value:
+                # setattr(dbentry, name, form._fields[name].data)
+            if form_value != column_value:
+                setattr(dbentry, name, form._fields[name].data)
+
+
 db = SQLAlchemy()
 
 

@@ -1,0 +1,13 @@
+{% extends "account/layout.html" %}
+
+{% block form_contents %}
+{{ render_field(form.login) }}
+{{ render_field(form.timezone) }}
+{% if form.locale.choices|length > 1 -%}
+{{ render_field(form.locale) }}
+{%- endif %}
+{% endblock %}
+
+{% block form_actions %}
+  {{ form.update() }}
+{% endblock %}
