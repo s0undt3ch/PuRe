@@ -71,18 +71,20 @@ def configure_app(config):
     Configure App hook
     '''
     try:
-        import appconfig  # pylint: disable=F0401
-        app.config.from_object(appconfig)
+        import porchappconfig  # pylint: disable=F0401
+        app.config.from_object(porchappconfig)
     except ImportError:
-        errmsg = 'Can\'t configure application because the `appconfig` module is not importable.'
+        errmsg = (
+            'Can\'t configure application because the `porchappconfig` module is not importable.'
+        )
         if not config:
             print(errmsg)
             sys.exit(1)
 
         sys.path.insert(0, os.path.abspath(config))
         try:
-            import appconfig  # pylint: disable=F0401
-            app.config.from_object(appconfig)
+            import porchappconfig  # pylint: disable=F0401
+            app.config.from_object(porchappconfig)
         except ImportError:
             print(errmsg)
             sys.exit(1)
