@@ -43,12 +43,11 @@ class ProfileForm(DBBoundForm):
 
     title       = _('My Account')
 
-    login       = TextField(_('Username'), validators=[Required()])
+    login       = TextField(_('Username'))
     timezone    = SelectField(_('Timezone'),
                               description=_('Select your Time Zone'))
     locale      = SelectField(_('Locale'),
-                              description=_('This will be the language Salt-CI will use to you.'))
-    hooks_token = HiddenField(_('Hooks Token'))
+                              description=_('This will be the language POrch will use for you.'))
 
     # Actions
     update      = PrimarySubmitField(_('Update Details'))
@@ -187,6 +186,7 @@ def signout():
 def profile():
     form = ProfileForm(db_entry=g.identity.account, formdata=request.values.copy())
     if form.validate_on_submit():
+        del form.login  # Users won't be able to change their login
         db.update_dbentry_from_form(g.identity.account, form)
         db.session.commit()
         flash(_('Account details updated.'), 'success')
