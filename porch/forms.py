@@ -22,6 +22,7 @@ from wtforms.validators import *
 from wtforms.fields import SubmitField as BaseSubmitField
 from babel.dates import get_timezone_name
 from werkzeug.datastructures import MultiDict
+from jinja2 import Markup
 from flask_wtf import Form
 
 # Import porch libs
