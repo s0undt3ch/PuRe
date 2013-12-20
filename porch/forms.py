@@ -60,6 +60,8 @@ class SubmitField(BaseSubmitField):
     def __call__(self, *args, **kwargs):
         class_ = set(kwargs.pop('class_', '').split())
         class_.add('btn')
+        class_.add('btn-lg')
+        class_.add('btn-primary')
         class_.add(self._secondary_class_)
         kwargs['class_'] = ' '.join(class_)
         return super(SubmitField, self).__call__(*args, **kwargs)
