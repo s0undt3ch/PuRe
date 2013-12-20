@@ -5,19 +5,24 @@
 
 {% block contents %}
   {% block before_form %}{% endblock %}
-  <form method="POST" action="">
-    <fieldset>
+  <form method="POST" action="" role="form" class="form">
+    <div class="panel panel-default">
       {% block form_legend -%}
-      <legend>{{ form.title }}</legend>
+      <div class="panel-heading">
+        {{ form.title }}
+      </div>
       {%- endblock %}
 
-      {{ form.hidden_tag() }}
-
-      {% block form_contents %}{% endblock %}
-      <div class="form-actions">
-        {% block form_actions %}{% endblock %}
+      <div class="panel-body">
+        {{ form.hidden_tag() }}
+        {% block form_contents %}{% endblock %}
       </div>
-    </fieldset>
+      <div class="panel-footer">
+        <div class="form-group form-actions">
+          {% block form_actions %}{% endblock %}
+        </div>
+      </div>
+    </div>
   </form>
   {% block after_form %}{% endblock %}
 {% endblock %}

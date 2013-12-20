@@ -137,7 +137,7 @@ babel = Babel(app)
 menus = MenuBuilder(app)
 
 # Cache Support
-cache = Cache(app)
+cache = Cache()
 
 
 @configuration_loaded.connect
@@ -145,6 +145,9 @@ def on_configuration_loaded(app):
     '''
     Once the configuration is loaded hook
     '''
+
+    # Init caching
+    cache.init_app(app)
 
     # If we're debugging...
     if app.debug:
@@ -194,7 +197,7 @@ def check_wether_account_is_not_none(menu_item):
 
 
 top_account_nav = menus.add_menu('top_account_nav', classes='dropdown-menu')
-account_view_nav = menus.add_menu('account_view_nav', classes='nav nav-tabs')
+account_view_nav = menus.add_menu('account_view_nav', classes='nav nav-tabs nav-account')
 
 menus.add_menu_entry(
     'top_account_nav', _('Sign-Out'), 'account.signout', priority=100,

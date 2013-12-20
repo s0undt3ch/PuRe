@@ -47,7 +47,8 @@ def build_timezones(locale=None):
     for tz in pytz.common_timezones:
         if tz.startswith('Etc/') or tz.startswith('GMT') or tz in __SKIP_ZONES:
             continue
-        timezones[get_timezone_name(pytz.timezone(tz), locale=locale)] = tz
+        timezones[u'{0} - {1}'.format(tz,
+                                      get_timezone_name(pytz.timezone(tz), locale=locale))] = tz
     return [(timezones[key], key) for key in sorted(timezones.keys())]
 
 

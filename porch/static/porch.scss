@@ -61,3 +61,20 @@ div.navbar-header {
   th.total { text-align: right; }
 
 }
+
+#wrap {
+  ul.nav {
+    margin: 0px -15px 15px -15px;
+  }
+
+  form .panel-footer {
+    padding: 10px 10px;
+
+    .form-group {
+      margin-bottom: auto;
+    }
+  }
+}
+
+.form-control { width: auto; }
+

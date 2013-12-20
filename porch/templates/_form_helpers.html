@@ -1,13 +1,12 @@
-{% macro render_field(field, options={}, show_description=True, inline_help=True) %}
-<div class="panel panel-default{% if field.errors %} error{% endif %}">
-  <div class="panel-heading">{{ field.label }}</div>
-  <div class="panel-body">
-    {{ field(class_=' '.join([options.pop('class_', ''),
-                              options.pop('class', ''),
-                              (field.errors and 'error' or '')]).strip(), **options) }}
-    {% if field.description and show_description %}
-      <span class="help-{% if inline_help%}inline{% else %}block{% endif %}">{{ field.description }}</span>
-    {% endif %}
-  </div>
+{% macro render_field(field, options={}, show_description=True) %}
+<div class="form-group{% if field.errors %} error{% endif %} ">
+  <label>{{ field.label }}</label>
+  {{ field(placeholder=field.label, class_=' '.join([options.pop('class_', ''),
+                                                     options.pop('class', ''),
+                                                     (field.errors and 'error' or '')] +
+                                                     ['form-control']).strip(), **options) }}
+  {% if field.description and show_description %}
+    <span class="help-block">{{ field.description }}</span>
+  {% endif %}
 </div>
 {% endmacro %}
