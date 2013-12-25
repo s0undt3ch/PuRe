@@ -5,6 +5,8 @@ Flask-SQLAlchemy
 Flask-Migrate
 Flask-MenuBuilder
 Flask-WTF
+Flask-Principal
+blinker
 iso8601
 PyGitHub
 JenkinsAPI
