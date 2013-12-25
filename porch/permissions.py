@@ -18,8 +18,8 @@ import logging
 # Import 3rd-party Libs
 import github
 # pylint: disable=E0611,F0401
-from flask.ext.principal import (AnonymousIdentity, Identity, Permission, Principal, RoleNeed,
-                                 TypeNeed, identity_changed, identity_loaded, ActionNeed)
+from flask_principal import (AnonymousIdentity, Identity, Permission, Principal, RoleNeed,
+                             TypeNeed, identity_changed, identity_loaded, ActionNeed)
 # pylint: enable=E0611,F0401
 from sqlalchemy.exc import OperationalError
 from porch.signals import after_identity_account_loaded, application_configured
@@ -56,7 +56,7 @@ authenticated_permission = Permission(TypeNeed('authenticated'))
 
 
 # ----- Instantiate Principal ------------------------------------------------------------------->
-principal = Principal(use_sessions=True, skip_static=True)
+principal = Principal(use_sessions=True, skip_static=False)
 
 
 @application_configured.connect
