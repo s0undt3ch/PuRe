@@ -44,7 +44,6 @@
           <div class="navbar-header">
             <a class="navbar-brand" href="{{ url_for('main.index') }}">POrch</a>
           </div>
-
           <div class="collapse navbar-collapse">
             {%- include '_account_nav.html' -%}
           </div><!--/.nav-collapse -->
@@ -53,8 +52,12 @@
       </div>
 
       <!-- Begin page content -->
-      <div class="container">
+      <div class="container main-container">
         {%- include '_flash_messages.html' -%}
+
+        <div class="collapse navbar-collapse">
+          {{ menubuilder.render('main_nav') }}
+        </div>
 
         {%- if self.h1_title() %}
         <div class="page-header">

@@ -63,8 +63,10 @@ div.navbar-header {
 }
 
 #wrap {
-  ul.nav {
-    margin: 0px -15px 15px -15px;
+  div.main-container {
+    ul.nav {
+      margin: 0px -30px 15px -30px;
+    }
   }
 
   form .panel-footer {
