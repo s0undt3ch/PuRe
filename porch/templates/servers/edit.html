@@ -1,0 +1,12 @@
+{% extends "servers/layout.html" %}
+
+{% block form_contents %}
+{{ render_field(form.address) }}
+{{ render_field(form.username) }}
+{% endblock %}
+
+{% block form_actions %}
+  {{ form.update() }}
+  <input type="button" class="btn-lg btn btn-warning" value="{% trans %}Cancel{% endtrans %}"
+         onclick="document.location='.';">
+{% endblock %}

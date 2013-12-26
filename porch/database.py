@@ -28,7 +28,8 @@ ALL_DB_IMPORTS = [
     'db',
     'Account',
     'Group',
-    'Privilege'
+    'Privilege',
+    'BuildServer'
 ]
 __all__ = ALL_DB_IMPORTS + ['ALL_DB_IMPORTS']
 # <---- Simplify * Imports -----------------------------------------------------------------------
@@ -195,4 +196,32 @@ account_privileges = db.Table(
     db.Column('account_github_id', db.Integer, db.ForeignKey('accounts.github_id'), nullable=False),
     db.Column('privilege_id', db.Integer, db.ForeignKey('privileges.id'), nullable=False)
 )
+
+
+class BuildServerQuery(db.Query):
+
+    def get(self, id_or_address):
+        if isinstance(id_or_address, basestring):
+            return self.filter(BuildServer.address == id_or_address).first()
+        return db.Query.get(self, id_or_address)
+
+    def from_address(self, address):
+        return self.filter(BuildServer.address == address).first()
+
+
+class BuildServer(db.Model):
+    __tablename__   = 'build_servers'
+
+    id              = db.Column(db.Integer, primary_key=True)
+    address         = db.Column(db.String(256), nullable=False, unique=True)
+    username        = db.Column(db.String(128), nullable=False)
+    access_token    = db.Column(db.String(128), nullable=False)
+
+    # Query attribute
+    query_class     = BuildServerQuery
+
+    def __init__(self, address, username, access_token):
+        self.address = address
+        self.username = username
+        self.access_token = access_token
 # <---- Define the Models ------------------------------------------------------------------------

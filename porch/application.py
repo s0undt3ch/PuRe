@@ -56,8 +56,16 @@ __all__ = [
     'get_locale',
     'Blueprint',
     'render_template',
-    'account_view_nav',
-    'check_wether_account_is_not_none'
+    'main_nav',
+
+    # Menu entries permissions check functions
+    'top_account_nav',
+    'build_context_nav',
+    'check_wether_account_is_none',
+    'check_wether_account_is_not_none',
+    'check_wether_is_admin',
+    'check_wether_is_manager',
+    'check_wether_is_manager_or_admin'
 ] + ALL_PERMISSION_IMPORTS + ALL_DB_IMPORTS
 # <---- Simplify * Imports -----------------------------------------------------------------------
 
@@ -196,13 +204,29 @@ def check_wether_account_is_not_none(menu_item):
     return g.identity.account is not None
 
 
-top_account_nav = menus.add_menu('top_account_nav', classes='dropdown-menu')
-account_view_nav = menus.add_menu('account_view_nav', classes='nav nav-tabs nav-account')
+def check_wether_is_admin(menu_item):
+    return g.identity.can(admin_permission)
 
-menus.add_menu_entry(
-    'top_account_nav', _('Sign-Out'), 'account.signout', priority=100,
-    visiblewhen=check_wether_account_is_not_none
-)
+
+def check_wether_is_manager(menu_item):
+    return g.identity.can(manager_permission)
+
+
+def check_wether_is_manager_or_admin(menu_item):
+    return g.identity.can(admin_or_manager_permission)
+
+
+def build_context_nav(name):
+    context_nav = menus.add_menu(
+        name, classes='context-nav {0}-ctx-nav nav nav-tabs fa-lg'.format(name)
+    )
+    context_nav.add_menu_entry('', 'main.index', classes='fa fa-home', priority=-1000)
+    return context_nav
+
+
+main_nav = build_context_nav('main_nav')
+
+top_account_nav = menus.add_menu('top_account_nav', classes='dropdown-menu')
 # <---- Setup The Web-Application Navigation -----------------------------------------------------
 
 
@@ -390,8 +414,12 @@ def inject_in_context():
 
 # ----- Setup The Web-Application Views --------------------------------------------------------->
 from porch.views.main import main
+from porch.views.builds import builds
 from porch.views.account import account
+from porch.views.servers import servers
 
 app.register_blueprint(main)
+app.register_blueprint(builds)
 app.register_blueprint(account)
+app.register_blueprint(servers)
 # <---- Setup The Web-Application Views ----------------------------------------------------------

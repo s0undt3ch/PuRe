@@ -19,6 +19,7 @@ import pytz
 from wtforms import *
 from wtforms.fields import *
 from wtforms.validators import *
+from wtforms.fields.html5 import *
 from wtforms.fields import SubmitField as BaseSubmitField
 from babel.dates import get_timezone_name
 from werkzeug.datastructures import MultiDict
@@ -109,7 +110,7 @@ class FormBase(Form):
                         _('Errors:'),
                         ''.join(['<li>{0}</li>'.format(e) for e in errors])
                     )
-                ), "error"
+                ), "danger"
             )
         return rv
 

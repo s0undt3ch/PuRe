@@ -1,0 +1,13 @@
+{% extends "servers/layout.html" %}
+
+{% block form_contents %}
+{{ render_field(form.address) }}
+{{ render_field(form.username) }}
+<h4 class="message-warning">{% trans %}Are you sure?{% endtrans %}</h4>
+{% endblock %}
+
+{% block form_actions %}
+  {{ form.delete() }}
+  <input type="button" class="btn-lg btn btn-warning" value="{% trans %}Cancel{% endtrans %}"
+         onclick="document.location='.';">
+{% endblock %}

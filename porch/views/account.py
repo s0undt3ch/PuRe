@@ -30,11 +30,21 @@ log = logging.getLogger(__name__)
 # ----- Blueprints & Menu Entries --------------------------------------------------------------->
 account = Blueprint('account', __name__, url_prefix='/account')
 
-profile_menu_entry = menus.add_menu_entry(
-    'top_account_nav', _('Profile'), 'account.profile', priority=-1,
+
+top_account_nav.add_menu_entry(
+    _('Profile'), 'account.profile', priority=-1,
     visiblewhen=check_wether_account_is_not_none
 )
-account_view_nav.add_menu_item(profile_menu_entry)
+top_account_nav.add_menu_entry(
+    _('Sign-Out'), 'account.signout', priority=100, classes='fa fa-sign-out',
+    visiblewhen=check_wether_account_is_not_none
+)
+
+account_view_nav = build_context_nav('account_view_nav')
+account_view_nav.add_menu_entry(
+    _('Profile'), 'account.profile', priority=-1, classes='fa fa-user',
+    visiblewhen=check_wether_account_is_not_none
+)
 # <---- Blueprints & Menu Entries ----------------------------------------------------------------
 
 

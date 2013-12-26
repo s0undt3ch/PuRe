@@ -53,11 +53,15 @@
 
       <!-- Begin page content -->
       <div class="container main-container">
-        {%- include '_flash_messages.html' -%}
 
         <div class="collapse navbar-collapse">
-          {{ menubuilder.render('main_nav') }}
+          {%- block render_main_nav %}
+            {{ menubuilder.render('main_nav') }}
+          {%- endblock %}
         </div>
+
+        {%- include '_flash_messages.html' -%}
+
 
         {%- if self.h1_title() %}
         <div class="page-header">
