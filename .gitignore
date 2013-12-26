@@ -40,3 +40,6 @@ porch/static/porch.css
 
 # Ignore SASS cache files
 .sass-cache
+
+# Ignore local vimrc file
+.lvimrc
