@@ -3,7 +3,8 @@
     {%- for category, message in messages %}
     {%- if category == 'message' %}
     {%- set category = 'info' %}
-    {%- elif category == 'danger' %}
+    {%- elif category == 'error' %}
+    {%- set category = 'danger' %}
     {%- endif %}
     <div class="alert alert-{{ category }}">
       <a class="close fa fa-times" data-dismiss="alert" href="#">&nbsp;</a>
