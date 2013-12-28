@@ -18,6 +18,7 @@ from datetime import datetime
 # Import 3rd-party plugins
 from sqlalchemy import orm
 from flask_sqlalchemy import SQLAlchemy as _SQLAlchemy
+from jenkinsapi.jenkins import Jenkins
 
 # Import POrch libs
 from porch.signals import application_configured
@@ -29,7 +30,8 @@ ALL_DB_IMPORTS = [
     'Account',
     'Group',
     'Privilege',
-    'BuildServer'
+    'BuildServer',
+    'Builder'
 ]
 __all__ = ALL_DB_IMPORTS + ['ALL_DB_IMPORTS']
 # <---- Simplify * Imports -----------------------------------------------------------------------
@@ -220,8 +222,33 @@ class BuildServer(db.Model):
     # Query attribute
     query_class     = BuildServerQuery
 
+    # Relationships
+    builders        = db.relation('Builder', backref='server', lazy=True,
+                                  collection_class=set, cascade='all, delete')
+
+
     def __init__(self, address, username, access_token):
         self.address = address
         self.username = username
         self.access_token = access_token
+
+    @property
+    def jenkins_instance(self):
+        return Jenkins(self.address, self.username, self.access_token)
+
+
+class Builder(db.Model):
+    __tablename__   = 'builders'
+
+    name            = db.Column(db.String(256), primary_key=True)
+    display_name    = db.Column(db.String(128))
+    description     = db.Column(db.String)
+    removed         = db.Column(db.Boolean, default=lambda: False, nullable=False)
+    builder_id      = db.Column(db.ForeignKey('build_servers.id'), nullable=False)
+
+    def __init__(self, name, display_name, description, active=True):
+        self.name = name
+        self.display_name = display_name
+        self.description = description
+        self.active = active
 # <---- Define the Models ------------------------------------------------------------------------

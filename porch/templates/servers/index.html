@@ -11,6 +11,7 @@
         <th>Address</th>
         <th>Username</th>
         <th>Access Token</th>
+        <th>Builders</th>
         <th>Actions</th>
       </tr>
     </tead>
@@ -20,11 +21,14 @@
         <td>{{ server.address }}</td>
         <td>{{ server.username }}</th>
         <td>{{ server.access_token }}</td>
+        <td>{{ server.builders|length }}</td>
         <td class="narrow">
           <a class="btn fa fa-edit" href={{ url_for('servers.edit', server_id=server.id) }}
              title="{% trans %}Edit Server{% endtrans %}">&nbsp;</a>
           <a class="btn fa fa-eraser" href={{ url_for('servers.delete', server_id=server.id) }}
              title="{% trans %}Delete Server{% endtrans %}">&nbsp;</a>
+          <a class="btn fa fa-refresh" href={{ url_for('servers.sync', server_id=server.id) }}
+             title="{% trans %}Edit Server{% endtrans %}">&nbsp;</a>
         </td>
       </tr>
       {%- endfor %}

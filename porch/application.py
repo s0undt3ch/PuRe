@@ -218,7 +218,7 @@ def check_wether_is_manager_or_admin(menu_item):
 
 def build_context_nav(name):
     context_nav = menus.add_menu(
-        name, classes='context-nav {0} nav nav-tabs fa-lg'.format(name)
+        name, classes='context-nav {0} nav nav-tabs'.format(name)
     )
     context_nav.add_menu_entry('', 'main.index', classes='fa fa-home', priority=-1000)
     return context_nav

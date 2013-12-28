@@ -45,6 +45,8 @@ class NewServerForm(DBBoundForm):
     address         = URLField(_('Address'), validators=[url()])
     username        = TextField(_('Username'))
     access_token    = PasswordField(_('Password'))
+    sync_builders   = BooleanField(_('Sync Server Builders'), default=True, description=_(
+                        'Sync all available builders from the server upon creation'))
 
     # Actions
     add             = PrimarySubmitField(_('Add'))
@@ -57,6 +59,8 @@ class NewServerForm(DBBoundForm):
 
     def validate(self, extra_validators=None):
         rv = super(Form, self).validate()
+        if not rv:
+            return rv
         # No errors? Validate the connection to the Jenkins server
         try:
             jenkins = Jenkins(self.address.data,
@@ -132,6 +136,7 @@ def index():
 @admin_permission.require(403)
 def new():
     form = NewServerForm(formdata=request.values.copy())
+    print 333, form.sync_builders.data
     if form.validate_on_submit():
         server = BuildServer(
             form.address.data,
@@ -139,6 +144,13 @@ def new():
             form.access_token.data
         )
         db.session.add(server)
+        if form.sync_builders.data is True:
+            for name, builder in server.jenkins_instance.iteritems():
+                if not builder.is_active():
+                    continue
+                server.builders.add(
+                    Builder(name, builder._data['displayName'], builder.get_description())
+                )
         db.session.commit()
         return redirect_to('servers.index')
     return render_template('servers/new.html', form=form)
@@ -176,4 +188,47 @@ def delete(server_id):
         return redirect_to('servers.index')
 
     return render_template('servers/delete.html', form=form)
+
+
+@servers.route('/sync/<int:server_id>', methods=('GET', 'POST'))
+@admin_permission.require(403)
+def sync(server_id):
+    server = BuildServer.query.get(server_id)
+    if not server:
+        flash(_('No build server by the ID of {0!r} was found'.format(server_id)), 'danger')
+        return redirect_back('servers.index')
+
+    existing = server.builders
+    existing_names = set([e.name for e in existing])
+    new = removed = updated = 0
+    unchanged = len(existing_names)
+    for name, builder in server.jenkins_instance.iteritems():
+        if name in existing_names:
+            existing_names.remove(name)
+            instance = Builder.query.get(name)
+            description = builder.get_description()
+            display_name = builder._data['displayName']
+            if instance.description == description and instance.display_name == display_name:
+                continue
+            instance.description = description
+            instance.display_name = display_name
+            updated += 1
+            continue
+
+        if not builder.is_active():
+            continue
+
+        server.builders.add(
+            Builder(name, builder._data['displayName'], builder.get_description())
+        )
+        new += 1
+    for name in existing_names:
+        builder = Builder.query.get(name)
+        builder.removed = True
+        removed += 1
+    db.session.commit()
+    flash(_('Synchronised server builders. New: {0}; Updated: {1}; Removed: {2}; '
+            'Unchanged: {3};'.format(new, updated, removed,
+                                     (unchanged - new - updated - removed))))
+    return redirect_to('servers.index')
 # <---- Views ------------------------------------------------------------------------------------
