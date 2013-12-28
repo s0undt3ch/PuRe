@@ -43,8 +43,8 @@ class NewServerForm(DBBoundForm):
     title           = _('New Build Server')
 
     address         = URLField(_('Address'), validators=[url()])
-    username        = TextField(_('Username'))
-    access_token    = PasswordField(_('Password'))
+    username        = TextField(_('Username'), validators=[DataRequired()])
+    access_token    = PasswordField(_('Password'), validators=[DataRequired()])
     sync_builders   = BooleanField(_('Sync Server Builders'), default=True, description=_(
                         'Sync all available builders from the server upon creation'))
 
@@ -82,8 +82,8 @@ class DeleteBuildServer(DBBoundForm):
     title           = _('Delete Build Server')
 
     id              = HiddenField('Server ID', validators=[DataRequired()])
-    address         = URLField(_('Address'))
-    username        = TextField(_('Username'))
+    address         = URLField(_('Address'), validators=[DataRequired()])
+    username        = TextField(_('Username'), validators=[DataRequired()])
 
     # Actions
     delete          = SensibleSubmitField(_('Delete'))
@@ -94,20 +94,17 @@ class EditBuildServer(DBBoundForm):
     title           = _('Edit Build Server')
 
     id              = HiddenField('Server ID', validators=[DataRequired()])
-    address         = URLField(_('Address'))
-    username        = TextField(_('Username'))
+    address         = URLField(_('Address'), validators=[DataRequired()])
+    username        = TextField(_('Username'), validators=[DataRequired()])
+    access_token    = PasswordField(_('Password'), validators=[DataRequired()])
 
     # Actions
-    update          = SensibleSubmitField(_('Update'))
-
-    def validate_address(self, field):
-        if BuildServer.query.get(field.data):
-            raise ValidationError(
-                _('There\'s already a build server matching the {0!r} address'.format(field.value))
-            )
+    update          = SubmitField(_('Update'))
 
     def validate(self, extra_validators=None):
         rv = super(Form, self).validate()
+        if not rv:
+            return rv
         # No errors? Validate the connection to the Jenkins server
         try:
             jenkins = Jenkins(self.address.data,
@@ -163,14 +160,13 @@ def edit(server_id):
     if not server:
         flash(_('No build server by the ID of {0!r} was found'.format(server_id)), 'danger')
         return redirect_back('servers.index')
-    form = DeleteBuildServer(server, formdata=request.values.copy())
+    form = EditBuildServer(server, formdata=request.values.copy())
     if form.validate_on_submit():
-        db.session.delete(server)
+        db.session.add(server)
         db.session.commit()
-        flash(_('Build server deleted'), 'info')
+        flash(_('Build server updated'), 'info')
         return redirect_to('servers.index')
-
-    return render_template('servers/delete.html', form=form)
+    return render_template('servers/edit.html', form=form)
 
 
 @servers.route('/delete/<int:server_id>', methods=('GET', 'POST'))

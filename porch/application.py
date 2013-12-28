@@ -374,6 +374,15 @@ def seconds_format_filter(seconds):
         return '{0:.3f}s'.format(seconds * 1.0)
 
 
+@app.template_filter('mask_access_token')
+def mask_access_token(access_token, visible=3):
+    return '{0}{1}{2}'.format(
+        access_token[:visible],
+        '*' * (len(access_token) - (2*visible)),
+        access_token[visible*-1:]
+    )
+
+
 @application_configured.connect
 def define_highlight(app):
     if app.config.get('DEBUG', False) or app.config.get('SQLALCHEMY_RECORD_QUERIES', False):
@@ -417,9 +426,11 @@ from porch.views.main import main
 from porch.views.builds import builds
 from porch.views.account import account
 from porch.views.servers import servers
+from porch.views.builders import builders
 
 app.register_blueprint(main)
 app.register_blueprint(builds)
 app.register_blueprint(account)
 app.register_blueprint(servers)
+app.register_blueprint(builders)
 # <---- Setup The Web-Application Views ----------------------------------------------------------

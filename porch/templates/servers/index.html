@@ -20,8 +20,8 @@
       <tr>
         <td>{{ server.address }}</td>
         <td>{{ server.username }}</th>
-        <td>{{ server.access_token }}</td>
-        <td>{{ server.builders|length }}</td>
+        <td>{{ server.access_token|mask_access_token }}</td>
+        <td><a href="{{ url_for('builders.index') }}">{{ server.builders|length }}</a></td>
         <td class="narrow">
           <a class="btn fa fa-edit" href={{ url_for('servers.edit', server_id=server.id) }}
              title="{% trans %}Edit Server{% endtrans %}">&nbsp;</a>

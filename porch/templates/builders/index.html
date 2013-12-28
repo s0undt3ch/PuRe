@@ -1,0 +1,37 @@
+{% extends "builders/layout.html" %}
+
+{% block title %}Builders{% endblock %}
+
+{% block contents %}
+{% if builders %}
+<div class="table-responsive">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Display Name</th>
+        <th>Description</th>
+        <th>Server</th>
+        <th>Actions</th>
+      </tr>
+    </tead>
+    <tbody class="table-hover">
+      {%- for builder in builders %}
+      <tr>
+        <td>{{ builder.display_name }}</td>
+        <td>{{ builder.description }}</td>
+        <td>
+          <a href="{{ url_for('servers.edit', server_id=builder.server.id) }}">{{builder.server.address}}</a>
+        </td>
+        <td class="narrow">
+          <a class="btn fa fa-eraser" href={{ url_for('builders.delete', builder_name=builder.name) }}
+             title="{% trans %}Delete Server{% endtrans %}">&nbsp;</a>
+        </td>
+      </tr>
+      {%- endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<p>No builders available</p>
+{% endif %}
+{% endblock %}
