@@ -20,7 +20,7 @@ from porch.application import *
 builders = Blueprint('builders', __name__, url_prefix='/builders')
 
 main_category_link = main_nav.add_menu_entry(
-    _('Builders'), 'builders.index', classes='fa fa-cogs',
+    _('Builders'), 'builders.index',
     visiblewhen=check_wether_is_manager_or_admin
 )
 

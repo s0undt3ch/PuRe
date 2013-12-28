@@ -33,6 +33,7 @@ from jinja2 import Markup
 # Import POrch libs
 from porch.signals import application_configured, configuration_loaded
 # pylint: disable=W0401,W0614
+from porch.helpers import *
 from porch.database import *
 from porch.permissions import *
 # pylint: enable=W0401,W0614
@@ -56,9 +57,10 @@ __all__ = [
     'get_locale',
     'Blueprint',
     'render_template',
-    'main_nav',
+    'glyphiconer',
 
     # Menu entries permissions check functions
+    'main_nav',
     'top_account_nav',
     'build_context_nav',
     'check_wether_account_is_none',
@@ -220,7 +222,9 @@ def build_context_nav(name):
     context_nav = menus.add_menu(
         name, classes='context-nav {0} nav nav-tabs'.format(name)
     )
-    context_nav.add_menu_entry('', 'main.index', classes='fa fa-home', priority=-1000)
+    context_nav.add_menu_entry(
+        glyphiconer('home', nbsp=False), 'main.index', priority=-1000
+    )
     return context_nav
 
 
@@ -415,6 +419,7 @@ def inject_in_context():
         locale = 'en'
     return dict(
         lang=locale,
+        glyphiconer=glyphiconer,
         get_debug_queries=get_debug_queries,
         account_is_admin=g.identity.can(admin_permission)
     )

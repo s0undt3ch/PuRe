@@ -23,8 +23,8 @@
           <a href="{{ url_for('servers.edit', server_id=builder.server.id) }}">{{builder.server.address}}</a>
         </td>
         <td class="narrow">
-          <a class="btn fa fa-eraser" href={{ url_for('builders.delete', builder_name=builder.name) }}
-             title="{% trans %}Delete Server{% endtrans %}">&nbsp;</a>
+          <a class="btn" href={{ url_for('builders.delete', builder_name=builder.name) }}
+             title="{% trans %}Delete Server{% endtrans %}">{{ glyphiconer('remove') }}</a>
         </td>
       </tr>
       {%- endfor %}

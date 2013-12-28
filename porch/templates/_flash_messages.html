@@ -7,7 +7,7 @@
     {%- set category = 'danger' %}
     {%- endif %}
     <div class="alert alert-{{ category }}">
-      <a class="close fa fa-times" data-dismiss="alert" href="#">&nbsp;</a>
+      <a class="close" data-dismiss="alert" href="#">{{ glyphiconer('remove-circle') }}</a>
       {{ message }}
     </div>
     {%- endfor %}

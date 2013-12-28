@@ -11,9 +11,10 @@
     </a>
     {{ menubuilder.render('top_account_nav') }}
     {%- else %}
-    <a href="{{ url_for('account.signin') }}">
-      <button class="btn btn-primary">
-        <i class="fa fa-github fa-2x">&nbsp;</i>{% trans %}Sign-In{% endtrans %}
+    <a href="{{ url_for('account.signin') }}"
+       title="{% trans %}Sign-In using your GitHub Account{% endtrans %}">
+      <button class="btn btn-primary btn-lg">
+        <i class="glyphicon glyphicon-log-in">&nbsp;</i>{% trans %}Sign-In{% endtrans %}
       </button>
     </a>
     {%- endif %}

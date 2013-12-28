@@ -24,14 +24,14 @@ from jenkinsapi.custom_exceptions import JenkinsAPIException
 servers = Blueprint('servers', __name__, url_prefix='/build-servers')
 
 main_category_link = main_nav.add_menu_entry(
-    _('Build Servers'), 'servers.index', classes='fa fa-cogs',
+    _('Build Servers'), 'servers.index',
     visiblewhen=check_wether_is_admin
 )
 
 servers_nav = build_context_nav('servers_view_nav')
 servers_nav.add_menu_item(main_category_link)
 servers_nav.add_menu_entry(
-    _('New Server'), 'servers.new', priority=100, classes='fa fa-plus', li_classes='pull-right',
+    glyphiconer('plus') + _('New Server'), 'servers.new', priority=100, li_classes='pull-right',
     visiblewhen=check_wether_is_admin
 )
 # <---- Blueprints & Menu Entries ----------------------------------------------------------------
