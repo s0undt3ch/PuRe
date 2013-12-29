@@ -29,9 +29,8 @@ main_category_link = main_nav.add_menu_entry(
 )
 
 servers_nav = build_context_nav('servers_view_nav')
-servers_nav.add_menu_item(main_category_link)
 servers_nav.add_menu_entry(
-    glyphiconer('plus') + _('New Server'), 'servers.new', priority=100, li_classes='pull-right',
+    glyphiconer('plus') + _('New Server'), 'servers.new', priority=100,
     visiblewhen=check_wether_is_admin
 )
 # <---- Blueprints & Menu Entries ----------------------------------------------------------------

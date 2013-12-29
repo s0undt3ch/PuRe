@@ -205,7 +205,9 @@ def check_wether_account_is_none(menu_item):
 
 
 def check_wether_account_is_not_none(menu_item):
-    return g.identity.account is not None
+    if hasattr(g.identity, 'account'):
+        return g.identity.account is not None
+    return False
 
 
 def check_wether_is_admin(menu_item):
@@ -222,10 +224,7 @@ def check_wether_is_manager_or_admin(menu_item):
 
 def build_context_nav(name):
     context_nav = menus.add_menu(
-        name, classes='context-nav {0} nav nav-tabs'.format(name)
-    )
-    context_nav.add_menu_entry(
-        glyphiconer('home', nbsp=False), 'main.index', priority=-1000
+        name, classes='{0} nav nav-tabs'.format(name)
     )
     return context_nav
 
@@ -234,7 +233,13 @@ def render_account_menu(menu):
     return render_template('_account_nav.html')
 
 
-main_nav = build_context_nav('main_nav')
+main_nav = menus.add_menu(
+    'main_nav', classes='main_nav nav nav-tabs'
+)
+main_nav.add_menu_entry(
+    glyphiconer('home', nbsp=False), 'main.index', priority=-1000
+)
+
 main_nav.add_menu_entry(
     glyphiconer('log-in') + _('Sign-In'), 'account.signin',
     title=_('Sign-In using your GitHub Account'),

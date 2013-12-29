@@ -46,13 +46,14 @@
           </div>
           <div class="collapse navbar-collapse">
             <div class="main-nav">
-              {%- block render_main_nav %}
-                {{ menubuilder.render('main_nav') }}
-              {%- endblock %}
+              {{ menubuilder.render('main_nav') }}
             </div>
           </div><!--/.nav-collapse -->
-
         </div>
+      </div>
+
+      <div class="context-nav nav-tabs-inverted">
+        {%- block render_context_nav %}{% endblock -%}
       </div>
 
       <!-- Begin page content -->
