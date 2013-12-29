@@ -25,7 +25,7 @@ from flask_cache import Cache
 from flask_script import Command, Option, Manager
 from flask_sqlalchemy import get_debug_queries
 from flask_migrate import Migrate, MigrateCommand
-from flask_menubuilder import MenuBuilder
+from flask_menubuilder import MenuBuilder, MenuItemContent
 
 # Import 3rd-party libs
 from jinja2 import Markup
@@ -199,7 +199,9 @@ def get_timezone():
 
 # ----- Setup The Web-Application Navigation ---------------------------------------------------->
 def check_wether_account_is_none(menu_item):
-    return g.identity.account is None
+    if hasattr(g.identity, 'account'):
+        return g.identity.account is None
+    return True
 
 
 def check_wether_account_is_not_none(menu_item):
@@ -228,9 +230,29 @@ def build_context_nav(name):
     return context_nav
 
 
-main_nav = build_context_nav('main_nav')
+def render_account_menu(menu):
+    return render_template('_account_nav.html')
 
-top_account_nav = menus.add_menu('top_account_nav', classes='dropdown-menu')
+
+main_nav = build_context_nav('main_nav')
+main_nav.add_menu_entry(
+    glyphiconer('log-in') + _('Sign-In'), 'account.signin',
+    title=_('Sign-In using your GitHub Account'),
+    classes='btn btn-info', li_classes='account-nav pull-right dropdown',
+    visiblewhen=check_wether_account_is_none
+)
+
+top_account_nav = menus.add_menu(
+    'top_account_nav', classes='dropdown-menu',
+    visiblewhen=check_wether_account_is_not_none
+)
+main_nav.add_menu_item(
+    MenuItemContent(
+        render_account_menu, is_link=False,
+        li_classes='account-nav pull-right dropdown',
+        visiblewhen=check_wether_account_is_not_none
+    )
+)
 # <---- Setup The Web-Application Navigation -----------------------------------------------------
 
 

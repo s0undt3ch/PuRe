@@ -45,7 +45,11 @@
             <a class="navbar-brand" href="{{ url_for('main.index') }}">POrch</a>
           </div>
           <div class="collapse navbar-collapse">
-            {%- include '_account_nav.html' -%}
+            <div class="main-nav">
+              {%- block render_main_nav %}
+                {{ menubuilder.render('main_nav') }}
+              {%- endblock %}
+            </div>
           </div><!--/.nav-collapse -->
 
         </div>
@@ -53,12 +57,6 @@
 
       <!-- Begin page content -->
       <div class="container main-container">
-
-        <div class="collapse navbar-collapse">
-          {%- block render_main_nav %}
-            {{ menubuilder.render('main_nav') }}
-          {%- endblock %}
-        </div>
 
         {%- include '_flash_messages.html' -%}
 

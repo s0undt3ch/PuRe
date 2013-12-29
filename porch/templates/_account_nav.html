@@ -1,22 +1,7 @@
-<div class="navbar-account pull-right">
-  <div class="dropdown">
-    {%- if g.identity.account %}
-    <a href="{{ url_for('account.profile') }}" class="dropdown-toggle" data-toggle="dropdown">
-      <button class="btn btn-info">
-        {% if g.identity.account.avatar_url -%}
-        <img class="gravatar" height="38" width="38" src="{{ g.identity.account.avatar_url }}"/>
-        {%- endif %} {{ g.identity.account.login }}&nbsp;
-        <b class="caret"></b>
-      </button>
-    </a>
-    {{ menubuilder.render('top_account_nav') }}
-    {%- else %}
-    <a href="{{ url_for('account.signin') }}"
-       title="{% trans %}Sign-In using your GitHub Account{% endtrans %}">
-      <button class="btn btn-primary btn-lg">
-        <i class="glyphicon glyphicon-log-in">&nbsp;</i>{% trans %}Sign-In{% endtrans %}
-      </button>
-    </a>
-    {%- endif %}
-  </div>
-</div>
+<a href="{{ url_for('account.profile') }}" class="dropdown-toggle btn btn-info" data-toggle="dropdown">
+  {% if g.identity.account.avatar_url -%}
+  <img class="gravatar" height="32" width="32" src="{{ g.identity.account.avatar_url }}"/>
+  {%- endif %} {{ g.identity.account.login }}&nbsp;
+  <b class="caret"></b>
+</a>
+{{ menubuilder.render('top_account_nav') }}
