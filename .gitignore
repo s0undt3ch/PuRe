@@ -43,3 +43,6 @@ porch/static/porch.css
 
 # Ignore local vimrc file
 .lvimrc
+
+# Ignore compiled translations
+porch/translations/**/LC_MESSAGES/*.mo

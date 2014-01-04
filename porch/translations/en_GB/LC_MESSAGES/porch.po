@@ -1,0 +1,277 @@
+# English (United Kingdom) translations for POrch.
+# Copyright (C) 2014 SaltStack
+# This file is distributed under the same license as the POrch project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: POrch 0.5.0\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2014-01-04 11:03+0000\n"
+"PO-Revision-Date: 2014-01-04 11:04+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: en_GB <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.0-dev\n"
+
+#: porch/application.py:244
+msgid "Sign-In"
+msgstr ""
+
+#: porch/application.py:245
+msgid "Sign-In using your GitHub Account"
+msgstr ""
+
+#: porch/application.py:355
+msgid "You have not signed in yet."
+msgstr ""
+
+#: porch/application.py:361
+msgid "You don't have the required permissions."
+msgstr ""
+
+#: porch/forms.py:98
+msgid "Form Token Is Invalid. You MUST have cookies enabled."
+msgstr ""
+
+#: porch/forms.py:110
+msgid "Errors:"
+msgstr ""
+
+#: porch/templates/404.html:3 porch/templates/404.html:6
+msgid "Page Not Found"
+msgstr ""
+
+#: porch/templates/404.html:7
+msgid "What you were looking for is just not there."
+msgstr ""
+
+#: porch/templates/500.html:3 porch/templates/500.html:6
+msgid "Internal Error"
+msgstr ""
+
+#: porch/templates/500.html:8
+msgid "Summary:"
+msgstr ""
+
+#: porch/templates/500.html:9
+msgid "Request Details:"
+msgstr ""
+
+#: porch/templates/500.html:12
+msgid "Python Traceback:"
+msgstr ""
+
+#: porch/templates/500.html:31
+msgid ""
+"There was an internal error during processing.\n"
+"    The administrators have been notified."
+msgstr ""
+
+#: porch/templates/builders/delete.html:5 porch/templates/servers/delete.html:6
+msgid "Are you sure?"
+msgstr ""
+
+#: porch/templates/builders/delete.html:10
+#: porch/templates/builders/edit.html:10 porch/templates/builders/new.html:11
+#: porch/templates/groups/edit.html:10 porch/templates/servers/delete.html:11
+#: porch/templates/servers/edit.html:11 porch/templates/servers/new.html:12
+msgid "Cancel"
+msgstr ""
+
+#: porch/templates/builders/index.html:27 porch/views/builders.py:34
+msgid "Delete Builder"
+msgstr ""
+
+#: porch/templates/groups/index.html:3 porch/views/groups.py:23
+msgid "Groups"
+msgstr ""
+
+#: porch/templates/groups/index.html:23
+msgid "Delete Group"
+msgstr ""
+
+#: porch/templates/groups/index.html:25
+msgid "Edit Group"
+msgstr ""
+
+#: porch/templates/servers/index.html:27
+msgid "Edit Server"
+msgstr ""
+
+#: porch/templates/servers/index.html:29
+msgid "Delete Server"
+msgstr ""
+
+#: porch/templates/servers/index.html:31 porch/views/servers.py:47
+msgid "Sync Server Builders"
+msgstr ""
+
+#: porch/templates/users/index.html:3 porch/views/users.py:23
+msgid "Users"
+msgstr ""
+
+#: porch/templates/users/index.html:27
+msgid "User Permissions"
+msgstr ""
+
+#: porch/views/account.py:34 porch/views/account.py:44
+msgid "Profile"
+msgstr ""
+
+#: porch/views/account.py:38
+msgid "Sign-Out"
+msgstr ""
+
+#: porch/views/account.py:53
+msgid "My Account"
+msgstr ""
+
+#: porch/views/account.py:55 porch/views/servers.py:45
+#: porch/views/servers.py:85 porch/views/servers.py:97
+msgid "Username"
+msgstr ""
+
+#: porch/views/account.py:56
+msgid "Timezone"
+msgstr ""
+
+#: porch/views/account.py:57
+msgid "Select your Time Zone"
+msgstr ""
+
+#: porch/views/account.py:58
+msgid "Locale"
+msgstr ""
+
+#: porch/views/account.py:59
+msgid "This will be the language POrch will use for you."
+msgstr ""
+
+#: porch/views/account.py:62
+msgid "Update Details"
+msgstr ""
+
+#: porch/views/account.py:85
+msgid "You're already authenticated!"
+msgstr ""
+
+#: porch/views/account.py:117
+msgid "This authentication has been tampered with! Aborting!!!"
+msgstr ""
+
+#: porch/views/account.py:177
+msgid "You are now signed in."
+msgstr ""
+
+#: porch/views/account.py:187
+msgid "You are now signed out."
+msgstr ""
+
+#: porch/views/account.py:189
+msgid "You're not authenticated!"
+msgstr ""
+
+#: porch/views/account.py:201
+msgid "Account details updated."
+msgstr ""
+
+#: porch/views/builders.py:23
+msgid "Builders"
+msgstr ""
+
+#: porch/views/builders.py:37
+msgid "Display Name"
+msgstr ""
+
+#: porch/views/builders.py:40 porch/views/servers.py:88
+msgid "Delete"
+msgstr ""
+
+#: porch/views/builders.py:56
+msgid "No builder by the name of {0!r} was found"
+msgstr ""
+
+#: porch/views/builders.py:63
+msgid "Builder deleted"
+msgstr ""
+
+#: porch/views/builds.py:24
+msgid "Builds"
+msgstr ""
+
+#: porch/views/groups.py:29
+msgid "New Group"
+msgstr ""
+
+#: porch/views/servers.py:27
+msgid "Build Servers"
+msgstr ""
+
+#: porch/views/servers.py:33
+msgid "New Server"
+msgstr ""
+
+#: porch/views/servers.py:42
+msgid "New Build Server"
+msgstr ""
+
+#: porch/views/servers.py:44 porch/views/servers.py:84
+#: porch/views/servers.py:96
+msgid "Address"
+msgstr ""
+
+#: porch/views/servers.py:46 porch/views/servers.py:98
+msgid "Password"
+msgstr ""
+
+#: porch/views/servers.py:47
+msgid "Sync all available builders from the server upon creation"
+msgstr ""
+
+#: porch/views/servers.py:51
+msgid "Add"
+msgstr ""
+
+#: porch/views/servers.py:56
+msgid "There's already a build server matching the {0!r} address"
+msgstr ""
+
+#: porch/views/servers.py:71 porch/views/servers.py:115
+msgid "Unable to authenticate user {0!r} against the {1!r} server."
+msgstr ""
+
+#: porch/views/servers.py:81
+msgid "Delete Build Server"
+msgstr ""
+
+#: porch/views/servers.py:93
+msgid "Edit Build Server"
+msgstr ""
+
+#: porch/views/servers.py:101
+msgid "Update"
+msgstr ""
+
+#: porch/views/servers.py:160 porch/views/servers.py:176
+#: porch/views/servers.py:193
+msgid "No build server by the ID of {0!r} was found"
+msgstr ""
+
+#: porch/views/servers.py:166
+msgid "Build server updated"
+msgstr ""
+
+#: porch/views/servers.py:182
+msgid "Build server deleted"
+msgstr ""
+
+#: porch/views/servers.py:227
+msgid ""
+"Synchronised server builders. New: {0}; Updated: {1}; Removed: {2}; "
+"Unchanged: {3};"
+msgstr ""
+
