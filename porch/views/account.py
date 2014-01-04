@@ -65,7 +65,7 @@ class ProfileForm(DBBoundForm):
         super(ProfileForm, self).__init__(db_entry, formdata, *args, **kwargs)
         self.timezone.choices = build_timezones(get_locale())
         self.locale.choices = [
-            (l.language, l.display_name) for l in babel.list_translations()
+            (str(l), l.display_name) for l in babel.list_translations()
         ]
 
     def validate_locale(self, field):
