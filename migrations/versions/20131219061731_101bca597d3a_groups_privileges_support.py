@@ -63,19 +63,28 @@ def upgrade():
     op.bulk_insert(
         privileges, [
             {'name': 'administrator'},
-            {'name': 'manager'}
+            {'name': 'manager'},
+            {'name': 'pusher'},
+            {'name': 'contributor'},
+            {'name': 'commiter'}
         ]
     )
     op.bulk_insert(
         groups, [
             {'name': 'Administrator'},
-            {'name': 'Manager'}
+            {'name': 'Manager'},
+            {'name': 'Pusher'},
+            {'name': 'Contributor'},
+            {'name': 'Commiter'}
         ]
     )
     op.bulk_insert(
         group_privileges, [
             {'group_id': 1, 'privilege_id': 1},
             {'group_id': 2, 'privilege_id': 2},
+            {'group_id': 3, 'privilege_id': 3},
+            {'group_id': 4, 'privilege_id': 4},
+            {'group_id': 5, 'privilege_id': 5},
         ]
     )
     ### end Alembic commands ###
