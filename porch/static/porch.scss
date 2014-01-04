@@ -78,14 +78,33 @@ div.navbar-header {
   }
 
   table {
+    tbody > tr > td {
+      vertical-align: middle;
+    }
+
     tbody {
       tr {
         td.narrow {
           width: 1%;
           white-space: nowrap;
         }
+        td.expand {
+          width: 50%;
+        }
       }
     }
+    thead {
+      tr {
+        th.narrow {
+          width: 1%;
+          white-space: nowrap;
+        }
+        th.expand {
+          width: 50%;
+        }
+      }
+    }
+
   }
 }
 
@@ -129,6 +148,31 @@ div.navbar-header {
 
   .nav-tabs {
     border-bottom: none;
+
+    li {
+
+      a {
+        border-style: dotted;
+        border-bottom: none;
+      }
+      a.inactive {
+        border-color: #474747;
+      }
+      a.sensible {
+        border-color: #ff0000;
+      }
+      a.sensible.active {
+          color: #ff0000;
+          border-color: #ddd;
+      }
+    }
+
+    li.account-nav {
+      a {
+        border-style: none;
+        border-color: transparent;
+      }
+    }
   }
 }
 
