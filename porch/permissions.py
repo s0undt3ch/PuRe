@@ -28,9 +28,11 @@ log = logging.getLogger(__name__)
 
 # ----- Simplify * Imports ---------------------------------------------------------------------->
 ALL_PERMISSION_IMPORTS = [
-    'admin_permission',
+    'administrator_permission',
     'manager_permission',
-    'admin_or_manager_permission',
+    'pusher_permission',
+    'contributor_permission',
+    'committer_permission',
     'anonymous_permission',
     'authenticated_permission',
     'identity_changed',
@@ -42,16 +44,44 @@ __all__ = ALL_PERMISSION_IMPORTS + ['ALL_PERMISSION_IMPORTS']
 
 
 # ----- Default Roles & Permissions ------------------------------------------------------------->
-admin_role = RoleNeed('administrator')
-admin_permission = Permission(admin_role)
+committer_role = RoleNeed('committer')
+committer_permission = Permission(committer_role)
+
+contributor_role = RoleNeed('contributor')
+contributor_permission = Permission(contributor_role,
+                                    committer_role)
+
+pusher_role = RoleNeed('pusher')
+pusher_permission = Permission(pusher_role,
+                               contributor_role,
+                               committer_role)
 
 manager_role = RoleNeed('manager')
-manager_permission = Permission(manager_role)
+manager_permission = Permission(manager_role,
+                                pusher_role,
+                                contributor_role,
+                                committer_role)
 
-admin_or_manager_permission = Permission(admin_role, manager_role)
+administrator_role = RoleNeed('administrator')
+administrator_permission = Permission(administrator_role,
+                                      manager_role,
+                                      pusher_role,
+                                      contributor_role,
+                                      committer_role)
 
 anonymous_permission = Permission()
 authenticated_permission = Permission(TypeNeed('authenticated'))
+
+
+# Let's allow easy role loading by keeping a dictionary of built-in permissions and roles
+__BUILT_IN_PERMISSIONS = {}
+for key, value in locals().copy().items():
+    if not key.endswith('_permission'):
+        continue
+    __BUILT_IN_PERMISSIONS[key.split('_permission')[0]] = [
+        locals()['{0}_role'.format(need.value)] for need in value.needs
+        if '{0}_role'.format(need.value) in locals()
+    ]
 # <---- Default Roles & Permissions --------------------------------------------------------------
 
 
@@ -86,8 +116,11 @@ def on_application_configured(app):
                 for group in account.groups:
                     # And for each of the groups the user belongs to
                     for privilege in group.privileges:
-                        # Add the group privileges to the user
+                        if privilege.name in __BUILT_IN_PERMISSIONS:
+                            for role in __BUILT_IN_PERMISSIONS[privilege.name]:
+                                identity.provides.add(role)
                         identity.provides.add(RoleNeed(privilege.name))
+
                 # Setup this user's github api access
                 identity.github = github.Github(
                     account.token,
@@ -103,26 +136,27 @@ def on_application_configured(app):
 @principal.identity_saver
 def save_request_identity(identity):
     # Late import
-    from porch.database import db, Account
+    from porch.database import db, Account, Privilege
     log.debug('On save_request_identity: {0}'.format(identity))
     if getattr(identity, 'account', None) is None:
         log.debug('No account associated with identity. Nothing to store.')
         return
 
     for need in identity.provides:
-        log.debug('Identity {0!r} provides: {1}'.format(identity, need))
         if need.method in ('type', 'role'):
             # We won't store type methods, ie, "authenticated", nor, role
             # methods which are permissions belonging to groups and managed
             # on a future administration panel.
             continue
 
-        #privilege = models.Privilege.query.get(need)
-        #if not privilege:
-        #    log.debug('Privilege {0!r} does not exist. Creating...'.format(need))
-        #    privilege = models.Privilege(need)
-        #
-        #if privilege not in identity.account.privileges:
-        #    identity.account.privileges.add(privilege)
+        log.debug('Identity {0!r} provides: {1}'.format(identity, need))
+
+        privilege = Privilege.query.get(need)
+        if not privilege:
+            log.debug('Privilege {0!r} does not exist. Creating...'.format(need))
+            privilege = Privilege(need)
+
+        if privilege not in identity.account.privileges:
+            identity.account.privileges.add(privilege)
     db.session.commit()
 # <---- Instantiate Principal --------------------------------------------------------------------
