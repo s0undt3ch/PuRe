@@ -82,8 +82,8 @@ class Account(db.Model):
     email           = db.Column('github_email', db.String(254))
     token           = db.Column('github_access_token', db.String(100), index=True, unique=True)
     avatar_url      = db.Column(db.String(2000))
-    last_login      = db.Column(db.DateTime, default=datetime.utcnow)
-    register_date   = orm.deferred(db.Column(db.DateTime))
+    last_login      = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    register_date   = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     locale          = db.Column(db.String(10), default=lambda: 'en')
     timezone        = db.Column(db.String(25), default=lambda: 'UTC')
 

@@ -1,0 +1,35 @@
+{% extends "groups/layout.html" %}
+
+{% block title %}{% trans%}Groups{% endtrans %}{% endblock %}
+
+{% block contents %}
+{% if groups %}
+<div class="table-responsive">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th class="expand">Name</th>
+        <th class="narrow">Members</th>
+        <th class="narrow">Actions</th>
+      </tr>
+    </tead>
+    <tbody class="table-hover">
+      {%- for group in groups %}
+      <tr>
+        <td>{{ group.name }}</td>
+        <td class="narrow">{{ group.accounts.count() }}</td>
+        <td class="narrow">
+          <a class="btn" href={{ url_for('groups.delete', group_id=group.id) }}
+             title="{% trans %}Delete Group{% endtrans %}">{{ glyphiconer('trash') }}</a>
+          <a class="btn" href={{ url_for('groups.edit', group_id=group.id) }}
+             title="{% trans %}Edit Group{% endtrans %}">{{ glyphiconer('edit') }}</a>
+        </td>
+      </tr>
+      {%- endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<p>No groups available</p>
+{% endif %}
+{% endblock %}
