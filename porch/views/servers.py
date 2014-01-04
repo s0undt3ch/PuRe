@@ -24,7 +24,7 @@ from jenkinsapi.custom_exceptions import JenkinsAPIException
 servers = Blueprint('servers', __name__, url_prefix='/build-servers')
 
 main_category_link = main_nav.add_menu_entry(
-    _('Build Servers'), 'servers.index',
+    _('Build Servers'), 'servers.index', classes='sensible', priority=-10,
     visiblewhen=check_wether_is_admin
 )
 
@@ -123,13 +123,13 @@ class EditBuildServer(DBBoundForm):
 
 # ----- Views ----------------------------------------------------------------------------------->
 @servers.route('/')
-@admin_permission.require(403)
+@administrator_permission.require(403)
 def index():
     return render_template('servers/index.html', servers=BuildServer.query.all())
 
 
 @servers.route('/new', methods=('GET', 'POST'))
-@admin_permission.require(403)
+@administrator_permission.require(403)
 def new():
     form = NewServerForm(formdata=request.values.copy())
     print 333, form.sync_builders.data
@@ -153,7 +153,7 @@ def new():
 
 
 @servers.route('/edit/<int:server_id>', methods=('GET', 'POST'))
-@admin_permission.require(403)
+@administrator_permission.require(403)
 def edit(server_id):
     server = BuildServer.query.get(server_id)
     if not server:
@@ -169,7 +169,7 @@ def edit(server_id):
 
 
 @servers.route('/delete/<int:server_id>', methods=('GET', 'POST'))
-@admin_permission.require(403)
+@administrator_permission.require(403)
 def delete(server_id):
     server = BuildServer.query.get(server_id)
     if not server:
@@ -186,7 +186,7 @@ def delete(server_id):
 
 
 @servers.route('/sync/<int:server_id>', methods=('GET', 'POST'))
-@admin_permission.require(403)
+@administrator_permission.require(403)
 def sync(server_id):
     server = BuildServer.query.get(server_id)
     if not server:

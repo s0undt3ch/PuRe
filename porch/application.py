@@ -67,7 +67,6 @@ __all__ = [
     'check_wether_account_is_not_none',
     'check_wether_is_admin',
     'check_wether_is_manager',
-    'check_wether_is_manager_or_admin'
 ] + ALL_PERMISSION_IMPORTS + ALL_DB_IMPORTS
 # <---- Simplify * Imports -----------------------------------------------------------------------
 
@@ -211,15 +210,11 @@ def check_wether_account_is_not_none(menu_item):
 
 
 def check_wether_is_admin(menu_item):
-    return g.identity.can(admin_permission)
+    return g.identity.can(administrator_permission)
 
 
 def check_wether_is_manager(menu_item):
     return g.identity.can(manager_permission)
-
-
-def check_wether_is_manager_or_admin(menu_item):
-    return g.identity.can(admin_or_manager_permission)
 
 
 def build_context_nav(name):
@@ -448,7 +443,7 @@ def inject_in_context():
         lang=locale,
         glyphiconer=glyphiconer,
         get_debug_queries=get_debug_queries,
-        account_is_admin=g.identity.can(admin_permission)
+        account_is_admin=g.identity.can(administrator_permission)
     )
 # <---- Jinja Context Injectors ------------------------------------------------------------------
 
@@ -459,10 +454,14 @@ from porch.views.builds import builds
 from porch.views.account import account
 from porch.views.servers import servers
 from porch.views.builders import builders
+from porch.views.users import users
+from porch.views.groups import groups
 
 app.register_blueprint(main)
 app.register_blueprint(builds)
 app.register_blueprint(account)
 app.register_blueprint(servers)
 app.register_blueprint(builders)
+app.register_blueprint(users)
+app.register_blueprint(groups)
 # <---- Setup The Web-Application Views ----------------------------------------------------------

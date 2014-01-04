@@ -21,11 +21,10 @@ builders = Blueprint('builders', __name__, url_prefix='/builders')
 
 main_category_link = main_nav.add_menu_entry(
     _('Builders'), 'builders.index',
-    visiblewhen=check_wether_is_manager_or_admin
+    visiblewhen=check_wether_is_manager
 )
 
 builders_nav = build_context_nav('builders_view_nav')
-builders_nav.add_menu_item(main_category_link)
 # <---- Blueprints & Menu Entries ----------------------------------------------------------------
 
 
@@ -44,13 +43,13 @@ class DeleteBuilderForm(DBBoundForm):
 
 # ----- Views ----------------------------------------------------------------------------------->
 @builders.route('/')
-@admin_or_manager_permission.require(403)
+@manager_permission.require(403)
 def index():
     return render_template('builders/index.html', builders=Builder.query.all())
 
 
 @builders.route('/delete/<builder_name>', methods=('GET', 'POST'))
-@admin_or_manager_permission.require(403)
+@manager_permission.require(403)
 def delete(builder_name):
     builder = Builder.query.get(builder_name)
     if not builder:
